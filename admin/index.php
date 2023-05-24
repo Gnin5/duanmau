@@ -1,6 +1,7 @@
 <?php
 include "../model/pdo.php";
 include "../model/category.php";
+include "../model/product.php";
 include "header.php";
 
 if (isset($_GET['act'])) {
@@ -16,23 +17,21 @@ if (isset($_GET['act'])) {
             include "category/add.php";
             break;
         case 'listdm':
-            $sql = "SELECT * FROM category ORDER BY name_cate";
-            $listdm = pdo_query($sql);
+            $listdm = loadlist_dm();
             include "category/list.php";
             break;
         case 'xoadm':
             if (isset($_GET['id']) && ($_GET['id'] > 0)) {
-                $sql = "DELETE FROM category WHERE id_cate=" . $_GET['id'];
-                pdo_execute($sql);
+                delete_dm($_GET['id']);
             }
             $sql = "SELECT * FROM category ORDER BY name_cate";
-            $listdm = pdo_query($sql);
+            $listdm = loadlist_dm();
             include "category/list.php";
             break;
         case 'suadm':
             if (isset($_GET['id']) && ($_GET['id'] > 0)) {
-                $sql = "SELECT * FROM category WHERE id_cate=" . $_GET['id'];
-                $dm = pdo_query_one($sql);
+
+                $dm = edit_dm($_GET['id']);
             }
 
             include "category/update.php";
@@ -41,13 +40,72 @@ if (isset($_GET['act'])) {
             if (isset($_POST['capnhat']) && ($_POST['capnhat'])) {
                 $tenloai = $_POST['name'];
                 $id = $_POST['id'];
-                $sql = "UPDATE category SET name_cate='" . $tenloai . "' WHERE id_cate=" . $id;
-                pdo_execute($sql);
+                update_dm($id, $tenloai);
                 $noti = "Cập nhật mục thành công";
             }
             $sql = "SELECT * FROM category ORDER BY name_cate";
-            $listdm = pdo_query($sql);
+            $listdm = loadlist_dm();
             include "category/list.php";
+            break;
+            //end category
+        case 'addsp':
+            if (isset($_POST['themmoi']) && ($_POST['themmoi'])) {
+                $iddm = $_POST['id_cate'];
+                $tensp = $_POST['name_product'];
+                $giasp = $_POST['price_product'];
+                $detailsp = $_POST['detail_product'];
+                $filename = $_FILES['img_product']['name'];
+                $target_dir = "../uploads/";
+                $target_file = $target_dir . basename($_FILES["img_product"]["name"]);
+                if (move_uploaded_file($_FILES["img_product"]["tmp_name"], $target_file)) {
+                    // echo "The file " . htmlspecialchars(basename($_FILES["img_product"]["name"])) . " has been uploaded.";
+                } else {
+                    //echo "Sorry, there was an error uploading your file.";
+                }
+                add_sp($tensp, $giasp, $filename, $detailsp, $iddm);
+                $noti = "Thêm danh mục thành công";
+            }
+            $listdm = loadlist_dm();
+            include "Products/add.php";
+            break;
+        case 'listsp':
+            if (isset($_POST['listOk']) && ($_POST['listOk'])) {
+                $key = $_POST['key'];
+                $iddm = $_POST['id_cate'];
+            } else {
+                $key = '';
+                $iddm = 0;
+            }
+            $listdm = loadlist_dm();
+            $listsp = loadlist_sp($key, $iddm);
+            include "Products/list.php";
+            break;
+        case 'xoasp':
+            if (isset($_GET['id']) && ($_GET['id'] > 0)) {
+                delete_sp($_GET['id']);
+            }
+            $sql = "SELECT * FROM category ORDER BY name_cate";
+            $listdm = loadlist_sp();
+            include "Products/list.php";
+            break;
+        case 'suasp':
+            if (isset($_GET['id']) && ($_GET['id'] > 0)) {
+
+                $dm = edit_sp($_GET['id']);
+            }
+
+            include "Products/update.php";
+            break;
+        case 'updatesp':
+            if (isset($_POST['capnhat']) && ($_POST['capnhat'])) {
+                $tenloai = $_POST['name'];
+                $id = $_POST['id'];
+                update_sp($id, $tenloai);
+                $noti = "Cập nhật mục thành công";
+            }
+            $sql = "SELECT * FROM category ORDER BY name_cate";
+            $listdm = loadlist_sp();
+            include "Products/list.php";
             break;
 
         default:
