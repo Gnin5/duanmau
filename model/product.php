@@ -18,7 +18,7 @@ function loadlist_sp($key, $iddm)
         $sql .= " AND name_product LIKE ' % " . $key . " % '";
     }
     if ($iddm > 0) {
-        $sql .= " AND id_cate = '" . $iddm . "'";
+        $sql .= " AND id_product = '" . $iddm . "'";
     }
     $sql .= " ORDER BY name_product";
     $listsp = pdo_query($sql);
@@ -30,8 +30,12 @@ function edit_sp($id)
     $sp = pdo_query_one($sql);
     return $sp;
 }
-function update_sp($id, $tenloai)
+function update_sp($id, $iddm, $tensp, $giasp, $detailsp, $filename)
 {
-    $sql = "UPDATE products SET name_cate='" . $tenloai . "' WHERE id_cate=" . $id;
-    pdo_execute($sql);
+    if ($filename != "") {
+        $sql = "UPDATE products SET id_cate='" . $iddm . "', name_product='" . $tensp . "',price_product='" . $giasp . "',detail_product='" . $detailsp . "',img_product='" . $filename . "'  WHERE id_product=" . $id;
+    } else {
+        $sql = "UPDATE products SET id_cate='" . $iddm . "', name_product='" . $tensp . "',price_product='" . $giasp . "',detail_product='" . $detailsp . "'  WHERE id_product=" . $id;
+        pdo_execute($sql);
+    }
 }

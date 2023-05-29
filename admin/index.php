@@ -63,7 +63,7 @@ if (isset($_GET['act'])) {
                     //echo "Sorry, there was an error uploading your file.";
                 }
                 add_sp($tensp, $giasp, $filename, $detailsp, $iddm);
-                $noti = "Thêm danh mục thành công";
+                $noti = "Thêm sản phẩm thành công";
             }
             $listdm = loadlist_dm();
             include "Products/add.php";
@@ -84,27 +84,39 @@ if (isset($_GET['act'])) {
             if (isset($_GET['id']) && ($_GET['id'] > 0)) {
                 delete_sp($_GET['id']);
             }
-            $sql = "SELECT * FROM category ORDER BY name_cate";
-            $listdm = loadlist_sp();
+            $sql = "SELECT * FROM product ORDER BY name_product";
+            $listsp = loadlist_sp("", 0);
             include "Products/list.php";
             break;
         case 'suasp':
             if (isset($_GET['id']) && ($_GET['id'] > 0)) {
 
-                $dm = edit_sp($_GET['id']);
+                $sp = edit_sp($_GET['id']);
             }
-
+            $listdm = loadlist_dm();
             include "Products/update.php";
             break;
         case 'updatesp':
             if (isset($_POST['capnhat']) && ($_POST['capnhat'])) {
-                $tenloai = $_POST['name'];
                 $id = $_POST['id'];
-                update_sp($id, $tenloai);
-                $noti = "Cập nhật mục thành công";
+                $iddm = $_POST['id_cate'];
+                $tensp = $_POST['name_product'];
+                $giasp = $_POST['price_product'];
+                $detailsp = $_POST['detail_product'];
+                $filename = $_FILES['img_product']['name'];
+                $target_dir = "../uploads/";
+                $target_file = $target_dir . basename($_FILES["img_product"]["name"]);
+                if (move_uploaded_file($_FILES["img_product"]["tmp_name"], $target_file)) {
+                    // echo "The file " . htmlspecialchars(basename($_FILES["img_product"]["name"])) . " has been uploaded.";
+                } else {
+                    //echo "Sorry, there was an error uploading your file.";
+                }
+                update_sp($id, $iddm, $tensp, $giasp, $detailsp, $filename);
+                $noti = "Cập nhật sản phẩm thành công";
             }
-            $sql = "SELECT * FROM category ORDER BY name_cate";
-            $listdm = loadlist_sp();
+            $sql = "SELECT * FROM product ORDER BY name_product";
+            $listdm = loadlist_dm();
+            $listsp = loadlist_sp("", 0);
             include "Products/list.php";
             break;
 
