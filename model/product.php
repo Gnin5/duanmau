@@ -11,6 +11,13 @@ function delete_sp($id)
     pdo_execute($sql);
 }
 
+function loadlist_sp_home()
+{
+    $sql = "SELECT * FROM products WHERE 1 ORDER BY id_product DESC LIMIT 0,3";
+    $listsp = pdo_query($sql);
+    return $listsp;
+}
+
 function loadlist_sp($key, $iddm)
 {
     $sql = "SELECT * FROM products WHERE 1";

@@ -8,7 +8,7 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/b700018786.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="view/style.css">
+    <link rel="stylesheet" href="view/css/style.css">
 </head>
 
 <body>
@@ -18,15 +18,15 @@
             <div class="menu-all">
                 <ul class="menu-text-shop">
                     <li>soudemy</li>
-                    <li><a href="./index.html">Home</a></li>
-                    <li><a href="./shop.html">Shop</a></li>
-                    <li><a href="./about_us.html">About us</a></li>
-                    <li><a href="./blog.html">Blog</a></li>
+                    <li><a href="index.php?act=trangchu">Home</a></li>
+                    <li><a href="index.php?act=shop">Shop</a></li>
+                    <li><a href="index.php?act=abu">About us</a></li>
+                    <li><a href="index.php?act=blog">Blog</a></li>
                 </ul>
                 <div class="menu-social-shop">
                     <a href="#"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
                     <a href="#"><i class="fa-sharp fa-solid fa-cart-shopping"></i></a>
-                    <a href="#"><i class="fa-sharp fa-solid fa-bars"></i></a>
+                    <a href="index.php?act=login"><i class="fa-regular fa-user"></i></a>
                     <a href="#"><img src="./img/icons8-user-24.png" alt=""></a>
                 </div>
             </div>
