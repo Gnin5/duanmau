@@ -55,6 +55,37 @@ if ((isset($_GET['act'])) && ($_GET['act'] != "")) {
             }
             include "view/signUp.php";
             break;
+        case 'editUser':
+            if (isset($_POST['btn_submit']) && ($_POST['btn_submit'])) {
+                $user = $_POST['name_user'];
+                $pass = $_POST['pass_user'];
+                $email = $_POST['email_user'];
+                $addres = $_POST['addres'];
+                $phone = $_POST['phone_number'];
+                $id = $_POST['id_user'];
+                update_user($id, $user, $pass, $email, $addres, $phone);
+                header('location: index.php');
+                $_SESSION['user'] = checkuser($user, $pass);
+                $noti = "Cập nhật thành công !";
+            }
+            include "view/editUser.php";
+            break;
+        case 'forgotPass':
+            if (isset($_POST['btn_submit']) && ($_POST['btn_submit'])) {
+                $email = $_POST['email_user'];
+                $checkemail = check_email($email);
+                if (is_array($checkemail)) {
+                    $noti = "Mật khẩu của bạn là : " . $checkemail['pass'];
+                } else {
+                    $noti = "Email không tồn tại !";
+                }
+            }
+            include "view/forgotPass.php";
+            break;
+        case 'logout':
+            session_unset();
+            header("location : index.php");
+            break;
     }
 } else {
     include "view/trangchu.php";

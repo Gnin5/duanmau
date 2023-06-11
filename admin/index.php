@@ -2,6 +2,7 @@
 include "../model/pdo.php";
 include "../model/category.php";
 include "../model/product.php";
+include "../model/user.php";
 include "header.php";
 
 if (isset($_GET['act'])) {
@@ -119,7 +120,18 @@ if (isset($_GET['act'])) {
             $listsp = loadlist_sp("", 0);
             include "Products/list.php";
             break;
-
+        case 'dskh':
+            $listuser = load_user();
+            include "user/list.php";
+            break;
+        case 'xoatk':
+            if (isset($_GET['id']) && ($_GET['id'] > 0)) {
+                delete_tk($_GET['id']);
+            }
+            $sql = "SELECT * FROM user ORDER BY id_user";
+            $listuser = load_user();
+            include "user/list.php";
+            break;
         default:
             include "home.php";
             break;

@@ -12,9 +12,12 @@
                         <li class="list-group-item px-3 border-0 active">
                             <?= $user_name ?>
                         </li>
-                        <li class="list-group-item px-3 border-0"><a href="index.php?act=quenmk">Quên mật khẩu</a></li>
+                        <li class="list-group-item px-3 border-0"><a href="index.php?act=forgotPass">Quên mật khẩu</a></li>
                         <li class="list-group-item px-3 border-0"><a href="index.php?act=editUser">Cập nhật tài khoản</a></li>
-                        <li class="list-group-item px-3 border-0"><a href="admin/index.php">Đăng nhập admin</a></li>
+                        <?php if ($role == 1) {
+                        ?>
+                            <li class="list-group-item px-3 border-0"><a href="admin/index.php">Đăng nhập admin</a></li>
+                        <?php } ?>
                         <li class="list-group-item px-3 border-0"><a href="index.php?act=logout">Đăng xuất</a></li>
                     </ul>
                 </div>
